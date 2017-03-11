@@ -1,0 +1,1 @@
+qz_screen=1920x1080;Loading=Yes;fnc=2;pt4_token=aXpIar1vmH77iY13NCIsbbF3ZcbF7inXvwJlgRGf7Ew_;p_skey=8MzfQpIGKNSd1qexWCOfRj2nB6w0IMlgYP7Hl4ewgvA_;p_uin=o1845783751;skey=@VsuI4dlVq;uin=o1845783751;pt2gguin=o1845783751;ptcz=aa5859fb1af8a319e8fbf4be1bf83529a9410943a847095c85059e3de56a33c1;RK=Fskf6Yk/VU;ptisp=edu;ptui_loginuin=1845783751
