@@ -1,33 +1,35 @@
-1.qqZone_spider.py  ��Ҫ�ṩusername��password  [��ʱδ������֤������]
- ������cookie�ļ����в����Ƿ����username_cookie.txt
- �����ڣ�����ȡcookie,����skey��gtk
-	����cookie�Ƿ���Ч(ģ���½����ҳ��)
-	    ����Ч��������ص�½��Ϣ
-		����Ч�������qqZone_login.py��login������ʹ���û����������¼����ȡ����cookie����,������cookie�ļ�
- �������ڣ������qqZone_login.py��login������ʹ���û����������¼����ȡ����cookie����,������cookie�ļ�
- ps.����login������¼QQ�ռ�ʱ������¼ʧ�ܣ����ص�¼ʧ����Ϣ��
-    һ����������֤�룬��������֤�룬���������м��δ��뼴�ɱ�����֤�롣
+1.qqZone_spider.py  需要提供username和password  [暂时未考虑验证码问题]
+ 首先在cookie文件夹中查找是否存在username_cookie.txt
+ 若存在，则提取cookie,计算skey和gtk
+	检验cookie是否有效(模拟登陆好友页面)
+	    若有效，返回相关登陆信息
+		若无效，则调用qqZone_login.py的login函数，使用用户名和密码登录，获取最新cookie返回,并更新cookie文件
+ 若不存在，则调用qqZone_login.py的login函数，使用用户名和密码登录，获取最新cookie返回,并更新cookie文件
+ ps.其中login函数登录QQ空间时，若登录失败，返回登录失败信息。
+    一般遇不到验证码，若出现验证码，可重新运行几次代码即可避免验证码。
 
-2.qqZone_getCareInfo.py  (��ȡ�������ܶȣ�������˽���⣬ֻ����ȡ��Ȩqq��)
-  ����whoCareMe�б���meCareWho�б�
-  ���н��������ѵ�qq���룬��������ȨQQ�ţ�qqNo����Ӧ���ļ����µ�friends.txt
+2.qqZone_getCareInfo.py  (爬取好友亲密度，由于隐私问题，只能爬取授权qq号)
+  包括whoCareMe列表和meCareWho列表
+  从中解析出好友的qq号码，保存至授权QQ号（qqNo）对应的文件夹下的friends.txt
  
-3.qqZone_spiderUserInfo.py ��ʹ����Ȩqq������ȡ��qq�ŵĺ�����Ϣ��
-  ʵ����Դqq�ţ���ȨqqNo����ȡĿ��qq�ŵĸ�����Ϣ��Ŀ��qq����Դ��friends.txt����������qqNo/targetQQNo_info.txt
-  ��Ŀ��qq�Ŷ�Դqq�ſռ䲻�ɷ��ʣ����޷���ȡ,����Ŀ��qq��д��failedUser.txt (��ʾ�ú��Ѷ����ռ䲻�ɼ�Ӵ)
+3.qqZone_spiderUserInfo.py （使用授权qq号来爬取该qq号的好友信息）
+  实现了源qq号（授权qqNo）爬取目标qq号的个人信息（目标qq号来源于friends.txt），保存至qqNo/targetQQNo_info.txt
+  若目标qq号对源qq号空间不可访问，则无法爬取,将该目标qq号写入failedUser.txt (表示该好友对您空间不可见哟)
   
-4.qqZone_getCommonFriends.py  (�õ�����qq�ŵĹ�ͬ������Ϣ)
-  ͨ��friends.txt�ļ��õ���ͬ�����б������õ���ͬ���ѵ��ǳ���Ϣ��Ҳ�ɻ��������Ϣ��
-  ����Ȩ�޽��빲ͬ���ѵĿռ䣬����<no root>���档
+4.qqZone_getCommonFriends.py  (得到两个qq号的共同好友信息)
+  通过friends.txt文件得到共同好友列表，并得到共同好友的昵称信息（也可获得其他信息）
+  若无权限进入共同好友的空间，则以<no root>代替。
  
-5.qqZone_parseOneQQInfo.py  ��һ��qq�û��ĺ�����Ϣ���м�Ҫͳ�Ʒ���
-  �Ա�ͳ��  boy girl unknown
-  ����ͳ��(��������)  �������ƽ������
-  ���ѹ���ͳ�ơ�ʡ�ݡ����С���ס���ҡ���סʡ�ݡ���ס����ͳ�ơ�
-  �����Ϣ������qqNo�ļ����µ�address��birthyear��sex�ļ���
-  ����address��ͼ��������𷱶࣬�ñ�ű�ʾ�������ź������ļ��ж�Ӧ�����ͬ��
+5.qqZone_parseOneQQInfo.py  对一个qq用户的好友信息进行简要统计分析
+  性别统计  boy girl unknown
+  年龄统计(出生日期)  计算好友平均年龄
+  好友国家统计、省份、城市、暂住国家、暂住省份、暂住城市统计。
+  相关信息保存至qqNo文件夹下的address、birthyear、sex文件夹
+  其中address的图表由于类别繁多，用编号表示，具体编号含义与文件中对应编号相同。
 
-����:
+运行:
 python qqZone_spider.py
 python qqZone_getCommonFriends.py
 python qqZone_parseOneQQInfo.py
+ps.本项目由于分析的信息都涉及隐私问题，所有未能实现大量爬取，只能做些好友间统计。
+  计划下一步实施海量qq用户信息的爬取，qq号计划从种子qq号的qq好友空间抓取（从评论区、留言板等）。
