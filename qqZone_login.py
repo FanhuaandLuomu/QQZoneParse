@@ -57,8 +57,8 @@ def login(username,password):
 '''
 if __name__ == '__main__':
 	# username='1845783751'
-	# password='yinhaoQQ19940420'
+	# password='yin'
 	username='1049755192'
-	password='yinhaonrahbsqt'
+	password='yin'
 	login(username,password)
 '''
