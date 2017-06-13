@@ -16,7 +16,7 @@ driver.find_element_by_id('switcher_plogin').click()
 driver.find_element_by_id('u').clear()
 driver.find_element_by_id('u').send_keys('1845783751')
 driver.find_element_by_id('p').clear()
-driver.find_element_by_id('p').send_keys('yinhaoQQ19940420')
+driver.find_element_by_id('p').send_keys('yinhao')
 driver.find_element_by_id('login_button').click()
 time.sleep(3)
 
